@@ -19,6 +19,84 @@ namespace Parkoló
         public MainWindow()
         {
             InitializeComponent();
+            ParkoloSetup();
+        }
+
+        private void ParkoloSetup()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                var column = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
+                parkoloGrid.ColumnDefinitions.Add(column);
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                var row = new RowDefinition { Height = new GridLength(1, GridUnitType.Star) };
+                parkoloGrid.RowDefinitions.Add(row);
+            }
+
+            var parkolok = new List<Border>();
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    var border = new Border
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        BorderThickness = new Thickness(2),
+                        Height = 50,
+                        Width = 50
+                    };
+
+                    if (j != 4 && i != 0 && i != 3 && i != 6)
+                    {
+                        border = new Border
+                        {
+                            BorderBrush = Brushes.Black,
+                            BorderThickness = new Thickness(2),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Height = 50,
+                            Width = 50
+                        };
+                    }
+                    Grid.SetRow(border, i);
+                    Grid.SetColumn(border, j);
+                    parkolok.Add(border);
+                    parkoloGrid.Children.Add(border);
+                }
+            }
+        }
+
+        private void Jarmuvek_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Parkolok_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Esemenyek_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Tarifak_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Tranzakciok_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Statisztikak_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

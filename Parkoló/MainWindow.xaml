@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Parkoló"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Parkoló" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderThickness="0,0,2,0" BorderBrush="Black" >
+            <UniformGrid Columns="1" Margin="20">
+                <Button x:Name="Járművek" Content="Járművek" Margin="5" Click="Jarmuvek_Click"/>
+                <Button x:Name="Parkolók" Content="Parkolók" Margin="5" Click="Parkolok_Click"/>
+                <Button x:Name="Események" Content="Események" Margin="5" Click="Esemenyek_Click"/>
+                <Button x:Name="Tarifák" Content="Tarifák" Margin="5" Click="Tarifak_Click"/>
+                <Button x:Name="Tranzakciók" Content="Tranzakciók" Margin="5" Click="Tranzakciok_Click"/>
+                <Button x:Name="Statisztikák" Content="Statisztikák" Margin="5" Click="Statisztikak_Click"/>
+            </UniformGrid>
+        </Border>
+        <Border Grid.Column="1">
+            <Grid x:Name="parkoloGrid" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
     </Grid>
 </Window>
