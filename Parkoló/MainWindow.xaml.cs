@@ -44,17 +44,44 @@ namespace Parkoló
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        BorderThickness = new Thickness(2),
+                        Background = Brushes.LightGray,qw2
                         Height = 50,
                         Width = 50
                     };
 
-                    if (j != 4 && i != 0 && i != 3 && i != 6)
+                    if (i == 0 && j == 4)
                     {
                         border = new Border
                         {
+                            Background = Brushes.LightYellow,
+                            BorderBrush = Brushes.Red,
+                            BorderThickness = new Thickness(0, 2, 0, 0),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Height = 50,
+                            Width = 50
+                        };
+                    }
+                    else if (j != 4 && (i == 1 || i == 4))
+                    {
+                        border = new Border
+                        {
+                            Background = Brushes.FloralWhite,
                             BorderBrush = Brushes.Black,
-                            BorderThickness = new Thickness(2),
+                            BorderThickness = new Thickness(2,0,2,2),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Height = 50,
+                            Width = 50
+                        };
+                    }
+                    else if (j != 4 && (i == 2 || i == 5))
+                    {
+                        border = new Border
+                        {
+                            Background = Brushes.FloralWhite,
+                            BorderBrush = Brushes.Black,
+                            BorderThickness = new Thickness(2,2,2,0),
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center,
                             Height = 50,
