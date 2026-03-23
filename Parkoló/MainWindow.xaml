@@ -5,24 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Parkoló"
         mc:Ignorable="d"
-        Title="Parkoló Kezelő" MinHeight="450" MinWidth="800" Height="450" Width="800">
-    <Grid Background="SteelBlue">
+        Title="Parkoló Kezelő"
+        MinHeight="450" MinWidth="800" Height="450" Width="800" Icon="/Images/icon.ico">
+    <Grid x:Name="mainGrid" Background="DodgerBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" BorderThickness="0,0,2,0" BorderBrush="Black" >
-            <UniformGrid Columns="1" Margin="20">
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Járművek" Content="Járművek" Margin="5" Click="Jarmuvek_Click"/>
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Parkolók" Content="Parkolók" Margin="5" Click="Parkolok_Click"/>
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Események" Content="Események" Margin="5" Click="Esemenyek_Click"/>
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Tarifák" Content="Tarifák" Margin="5" Click="Tarifak_Click"/>
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Tranzakciók" Content="Tranzakciók" Margin="5" Click="Tranzakciok_Click"/>
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Statisztikák" Content="Statisztikák" Margin="5" Click="Statisztikak_Click"/>
+        <Border Grid.Column="0" BorderThickness="0,0,2,0" BorderBrush="CadetBlue" Background="SteelBlue">
+            <UniformGrid Columns="1" Margin="0,20">
+                <Button Style="{DynamicResource FomenuGomb}" x:Name="Járművek" Content="Járművek" Click="Jarmuvek_Click"/>
+                <Button Style="{DynamicResource FomenuGomb}" x:Name="Parkolók" Content="Parkolók" Click="Parkolok_Click"/>
+                <Button Style="{DynamicResource FomenuGomb}" x:Name="Események" Content="Események" Click="Esemenyek_Click"/>
+                <Button Style="{DynamicResource FomenuGomb}" x:Name="Tarifák" Content="Tarifák" Click="Tarifak_Click"/>
+                <Button Style="{DynamicResource FomenuGomb}" x:Name="Tranzakciók" Content="Tranzakciók" Click="Tranzakciok_Click"/>
+                <Button Style="{DynamicResource FomenuGomb}" x:Name="Statisztikák" Content="Statisztikák" Click="Statisztikak_Click"/>
             </UniformGrid>
         </Border>
-        <Viewbox Grid.Column="1" Margin="30">
-            <Grid x:Name="parkoloGrid" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </Viewbox>
     </Grid>
 </Window>
