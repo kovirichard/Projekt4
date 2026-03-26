@@ -44,7 +44,7 @@ namespace Parkoló
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Background = Brushes.LightGray,qw2
+                        Background = Brushes.LightGray,
                         Height = 50,
                         Width = 50
                     };
