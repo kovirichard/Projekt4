@@ -16,84 +16,88 @@ namespace Parkoló
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Border> Parkolohelyek { get; set; } = new List<Border>();
+
         public MainWindow()
         {
             InitializeComponent();
-            ParkoloSetup();
+            GenerateParkolo();
+            (Parkolohelyek.First(x => x.Name == "hely12").Child as TextBlock).Text = "ABC-123";
         }
 
-        private void ParkoloSetup()
+        private void GenerateParkolo()
         {
-            for (int i = 0; i < 10; i++)
+            Viewbox viewBox = new Viewbox
             {
-                var column = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
-                parkoloGrid.ColumnDefinitions.Add(column);
-            }
-            for (int i = 0; i < 7; i++)
+                Margin = new Thickness(30)
+            };
+            Grid.SetColumn(viewBox, 1);
+
+            Grid parkoloGrid = new Grid
             {
-                var row = new RowDefinition { Height = new GridLength(1, GridUnitType.Star) };
-                parkoloGrid.RowDefinitions.Add(row);
+                Name = "parkoloGrid",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Background = Brushes.DimGray
+            };
+
+            parkoloGrid.RowDefinitions.Add(new RowDefinition { MinHeight = 50 });
+            parkoloGrid.RowDefinitions.Add(new RowDefinition());
+            parkoloGrid.RowDefinitions.Add(new RowDefinition());
+            parkoloGrid.RowDefinitions.Add(new RowDefinition { MinHeight = 50 });
+            parkoloGrid.RowDefinitions.Add(new RowDefinition());
+            parkoloGrid.RowDefinitions.Add(new RowDefinition());
+            parkoloGrid.RowDefinitions.Add(new RowDefinition { MinHeight = 50 });
+
+            for (int i = 0; i < 9; i++)
+            {
+                parkoloGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            var parkolok = new List<Border>();
-            for (int i = 0; i < 7; i++)
+            int[] helyek = { 1, 2, 4, 5 };
+            foreach (int row in helyek)
             {
-                for (int j = 0; j < 9; j++)
+                for (int col = 0; col < 9; col++)
                 {
-                    var border = new Border
+                    Border border = new Border
                     {
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Background = Brushes.LightGray,
-                        Height = 50,
-                        Width = 50
+                        Width = 50,
+                        Height = 50
                     };
 
-                    if (i == 0 && j == 4)
+                    border.Name = $"hely{row}{col}";
+
+                    if (col == 0) border.Margin = new Thickness(10, 0, 0, 0);
+                    if (col == 8) border.Margin = new Thickness(0, 0, 10, 0);
+
+                    if (col != 4)
                     {
-                        border = new Border
-                        {
-                            Background = Brushes.LightYellow,
-                            BorderBrush = Brushes.Red,
-                            BorderThickness = new Thickness(0, 2, 0, 0),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Height = 50,
-                            Width = 50
-                        };
+                        border.BorderBrush = Brushes.WhiteSmoke;
+                        int left = 1;
+                        int top = (row == 2 || row == 5) ? 1 : 0;
+                        int right = (col == 3 || col == 8) ? 1 : 0;
+                        int bottom = (row == 1 || row == 4) ? 1 : 0;
+
+                        border.BorderThickness = new Thickness(left, top, right, bottom);
                     }
-                    else if (j != 4 && (i == 1 || i == 4))
+
+                    border.Child = new TextBlock
                     {
-                        border = new Border
-                        {
-                            Background = Brushes.FloralWhite,
-                            BorderBrush = Brushes.Black,
-                            BorderThickness = new Thickness(2,0,2,2),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Height = 50,
-                            Width = 50
-                        };
-                    }
-                    else if (j != 4 && (i == 2 || i == 5))
-                    {
-                        border = new Border
-                        {
-                            Background = Brushes.FloralWhite,
-                            BorderBrush = Brushes.Black,
-                            BorderThickness = new Thickness(2,2,2,0),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            Height = 50,
-                            Width = 50
-                        };
-                    }
-                    Grid.SetRow(border, i);
-                    Grid.SetColumn(border, j);
-                    parkolok.Add(border);
+                        Text = "",
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Foreground = Brushes.WhiteSmoke
+                    };
+
+                    Grid.SetRow(border, row);
+                    Grid.SetColumn(border, col);
+
                     parkoloGrid.Children.Add(border);
+                    Parkolohelyek.Add(border);
                 }
             }
+            viewBox.Child = parkoloGrid;
+            mainGrid.Children.Add(viewBox);
         }
 
         private void Jarmuvek_Click(object sender, RoutedEventArgs e)
