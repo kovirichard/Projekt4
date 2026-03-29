@@ -50,18 +50,175 @@ namespace Parkoló.Engine
                 }
             } while (_port <= 3310);
 
-            if (sikeres)
-            {
-                Connection?.Close();
-            }
-            else
+            if (!sikeres)
             {
                 MessageBox.Show("Nem sikerült csatlakozni az adatbázishoz. Kérem ellenőrizze a beállításokat.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 System.Windows.Application.Current.Shutdown();
             }
+
+            Parkolok = Read<Parkolo>(dataReader => new Parkolo(dataReader));
+            Jarmuvek = Read<Jarmu>(dataReader => new Jarmu(dataReader));
+            Esemenyek = Read<Esemeny>(dataReader => new Esemeny(dataReader));
+            Tranzakciok = Read<Tranzakcio>(dataReader => new Tranzakcio(dataReader));
+
+            Connection.Close();
         }
 
+        private List<T> Read<T>(Func<MySqlDataReader, T> tipusKeszites)
+        {
+            var tabla = new List<T>();
 
+            try
+            {
+                Connection.Open();
+                var cmd = new MySqlCommand(GenerateSelect(typeof(T)), Connection);
+                var dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    tabla.Add(tipusKeszites(dataReader));
+                }
+                dataReader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return tabla;
+        }
 
+        private void ExecuteNonQuery(string sql)
+        {
+            try
+            {
+                Connection.Open();
+                var cmd = new MySqlCommand(sql, Connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public int SaveChanges()
+        {
+            var parkoloDB = Read(x => new Parkolo(x));
+            var parkoloChanges = SaveTable(parkoloDB, Parkolok);
+
+            var jarmuDB = Read(x => new Jarmu(x));
+            var jarmuChanges = SaveTable(jarmuDB, Jarmuvek);
+
+            var esemenyDB = Read(x => new Esemeny(x));
+            var esemenyChanges = SaveTable(esemenyDB, Esemenyek);
+
+            var tranzakcioDB = Read(x => new Tranzakcio(x));
+            var tranzakcioChanges = SaveTable(tranzakcioDB, Tranzakciok);
+
+            if (parkoloChanges > 0)
+                Parkolok = Read(x => new Parkolo(x));
+
+            if (jarmuChanges > 0)
+                Jarmuvek = Read(x => new Jarmu(x));
+
+            if (esemenyChanges > 0)
+                Esemenyek = Read(x => new Esemeny(x));
+
+            if (tranzakcioChanges > 0)
+                Tranzakciok = Read(x => new Tranzakcio(x));
+
+            return parkoloChanges + jarmuChanges + esemenyChanges + tranzakcioChanges;
+        }
+
+        private int SaveTable<T>(List<T> dbtable, List<T> list)
+        {
+            var changes = 0;
+
+            foreach (var item in list)
+            {
+                var itemDB = dbtable.FirstOrDefault(x => x.GetType().GetProperty("Id").GetValue(x) ==
+                                    item.GetType().GetProperty("Id").GetValue(item));
+
+                if (itemDB == null)
+                {
+                    ExecuteNonQuery(GenerateInsert(item));
+                    changes++;
+                }
+                else
+                {
+                    if (!item.Equals(itemDB))
+                    {
+                        ExecuteNonQuery(GenerateUpdate(item));
+                        changes++;
+                    }
+                    dbtable.Remove(itemDB);
+                }
+            }
+
+            foreach (var itemDB in dbtable)
+            {
+                ExecuteNonQuery(GenerateDelete(itemDB));
+                changes++;
+            }
+
+            return changes;
+        }
+
+        private string GenerateSelect(Type type)
+        {
+            return $"SELECT * FROM {type.Name.ToLower()}";
+        }
+
+        private string GenerateInsert(Object obj)
+        {
+            var insert = $"INSERT INTO `{obj.GetType().Name}`";
+            var attributes = "(";
+            var values = "VALUES (";
+            foreach (var propInfo in obj.GetType().GetProperties())
+            {
+                if (propInfo.Name != "Id")
+                {
+                    attributes += $"`{propInfo.Name}`,";
+                    values += $"'{propInfo.GetValue(obj)}',";
+                }
+            }
+            attributes = attributes.Substring(0, attributes.Length - 1) + ") ";
+            values = values.Substring(0, values.Length - 1) + ")";
+
+            return insert + attributes + values;
+        }
+
+        private string GenerateUpdate(Object obj)
+        {
+            var update = $"UPDATE `{obj.GetType().Name}` ";
+            var set = "SET ";
+            var where = "WHERE ";
+
+            foreach (var propInfo in obj.GetType().GetProperties())
+            {
+                if (propInfo.Name != "Id")
+                    set += $"`{propInfo.Name}`='{propInfo.GetValue(obj)}',";
+                else
+                    where += $"`{propInfo.Name}`='{propInfo.GetValue(obj)}'";
+            }
+            set = set.Substring(0, set.Length - 1) + " ";
+
+            return update + set + where;
+        }
+
+        private string GenerateDelete(Object obj)
+        {
+            var delete = $"DELETE FROM `{obj.GetType().Name}` ";
+            var where = $"WHERE `id`='{obj.GetType().GetProperty("Id")!.GetValue(obj)}'";
+
+            return delete + where;
+        }
     }
 }
