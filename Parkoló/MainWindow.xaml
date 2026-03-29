@@ -17,7 +17,6 @@
                 <Button Style="{DynamicResource FomenuGomb}" x:Name="Járművek" Content="Járművek" Click="Jarmuvek_Click"/>
                 <Button Style="{DynamicResource FomenuGomb}" x:Name="Parkolók" Content="Parkolók" Click="Parkolok_Click"/>
                 <Button Style="{DynamicResource FomenuGomb}" x:Name="Események" Content="Események" Click="Esemenyek_Click"/>
-                <Button Style="{DynamicResource FomenuGomb}" x:Name="Tarifák" Content="Tarifák" Click="Tarifak_Click"/>
                 <Button Style="{DynamicResource FomenuGomb}" x:Name="Tranzakciók" Content="Tranzakciók" Click="Tranzakciok_Click"/>
                 <Button Style="{DynamicResource FomenuGomb}" x:Name="Statisztikák" Content="Statisztikák" Click="Statisztikak_Click"/>
             </UniformGrid>
