@@ -22,12 +22,14 @@ namespace Parkoló
         {
             InitializeComponent();
             ParkoloKezeloContext parkoloKezeloContext = new ParkoloKezeloContext();
+            TesztEszkozok tesztEszkozok = new TesztEszkozok();
+            tesztEszkozok.Show();
+
         }
 
         private void Jarmuvek_Click(object sender, RoutedEventArgs e)
         {
-            Jarmuvek jarmuvek = new Jarmuvek();
-            jarmuvek.ShowDialog();
+
         }
 
         private void Parkolok_Click(object sender, RoutedEventArgs e)

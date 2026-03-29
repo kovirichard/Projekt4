@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Parkoló
 {
     /// <summary>
-    /// Interaction logic for Jarmuvek.xaml
+    /// Interaction logic for TesztEszkozok.xaml
     /// </summary>
-    public partial class Jarmuvek : Window
+    public partial class TesztEszkozok : Window
     {
-        public Jarmuvek()
+        public TesztEszkozok()
         {
             InitializeComponent();
         }

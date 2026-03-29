@@ -50,7 +50,11 @@ namespace Parkoló.Engine
                 }
             } while (_port <= 3310);
 
-            if (!sikeres)
+            if (sikeres)
+            {
+                Connection.Close();
+            }
+            else
             {
                 MessageBox.Show("Nem sikerült csatlakozni az adatbázishoz. Kérem ellenőrizze a beállításokat.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 System.Windows.Application.Current.Shutdown();
@@ -60,8 +64,6 @@ namespace Parkoló.Engine
             Jarmuvek = Read<Jarmu>(dataReader => new Jarmu(dataReader));
             Esemenyek = Read<Esemeny>(dataReader => new Esemeny(dataReader));
             Tranzakciok = Read<Tranzakcio>(dataReader => new Tranzakcio(dataReader));
-
-            Connection.Close();
         }
 
         private List<T> Read<T>(Func<MySqlDataReader, T> tipusKeszites)
