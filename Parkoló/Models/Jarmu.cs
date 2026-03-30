@@ -9,6 +9,7 @@ namespace Parkoló.Models
 {
     public class Jarmu
     {
+        public int Id { get; set; }
         public string Rendszam { get; set; }
         public string Tipus { get; set; }
         public bool Mozgaskorlatozott { get; set; }
@@ -16,6 +17,7 @@ namespace Parkoló.Models
 
         public Jarmu(MySqlDataReader dataReader) 
         {
+            Id = Convert.ToInt32(dataReader["id"]);
             Rendszam = dataReader["rendszam"].ToString();
             Tipus = dataReader["tipus"].ToString();
             Mozgaskorlatozott = Convert.ToBoolean(dataReader["mozgaskorlatozott"]);
@@ -27,7 +29,7 @@ namespace Parkoló.Models
             var temp = obj as Jarmu;
             if (obj == null)
                 return false;
-            return Rendszam == temp.Rendszam && Tipus == temp.Tipus && Mozgaskorlatozott == temp.Mozgaskorlatozott && Elektromos == temp.Elektromos;
+            return Id == temp.Id && Rendszam == temp.Rendszam && Tipus == temp.Tipus && Mozgaskorlatozott == temp.Mozgaskorlatozott && Elektromos == temp.Elektromos;
         }
     }
 }

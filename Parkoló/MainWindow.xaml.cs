@@ -28,7 +28,7 @@ namespace Parkoló
             ctx = new ParkoloKezeloContext();
             parkoloHelyek = new List<Border>();
 
-            TesztEszkozok tesztEszkozok = new TesztEszkozok();
+            TesztEszkozok tesztEszkozok = new TesztEszkozok(ctx, parkoloHelyek);
             tesztEszkozok.Show();
 
             GenerateParkolo();
