@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Parkoló"
         mc:Ignorable="d"
-        Title="Teszt Eszközök" Height="300" Width="200" ResizeMode="NoResize">
+        Title="Teszt Eszközök" Height="300" Width="300">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Program tesztelése"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="10"/>
+
+        <Button Grid.Row="1" Grid.Column="0" Content="Jármű érkezése" Margin="10" Click="JarmuErkezese_Click"/>
+        <Button Grid.Row="1" Grid.Column="1" Content="Jármű távozása" Margin="10" Click="JarmuTavozasa_Click"/>
+
+        <Button Grid.Row="2" Grid.Column="0" FontSize="10" Margin="10" Click="JarmuErkezeseMindenhova_Click">
+            <TextBlock Text="Jármű érkezése (mindenhova)" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+        <Button Grid.Row="2" Grid.Column="1" FontSize="10" Margin="10" Click="JarmuTavozasaMindenhonnan_Click">
+            <TextBlock Text="Jármű távozása (mindenhonnan)" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="0" Content="Jármű hozzáadása" Margin="10" Click="JarmuHozzaadasa_Click"/>
+        <Button Grid.Row="3" Grid.Column="1" Content="Jármű törlése" Margin="10" Click="JarmuTorlese_Click"/>
+
     </Grid>
 </Window>

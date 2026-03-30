@@ -23,5 +23,35 @@ namespace Parkoló
         {
             InitializeComponent();
         }
+
+        private void JarmuErkezese_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void JarmuTavozasa_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void JarmuErkezeseMindenhova_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void JarmuTavozasaMindenhonnan_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void JarmuHozzaadasa_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void JarmuTorlese_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
