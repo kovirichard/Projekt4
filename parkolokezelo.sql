@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 30. 19:41
+-- Létrehozás ideje: 2026. Már 30.
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -21,9 +21,9 @@ SET time_zone = "+00:00";
 -- Adatbázis: `parkolokezelo`
 --
 
-CREATE DATABASE parkolokezelo
-DEFAULT CHARACTER SET utf8
-COLLATE utf8_hungarian_ci;
+CREATE DATABASE IF NOT EXISTS parkolokezelo
+DEFAULT CHARACTER SET utf8mb4
+COLLATE utf8mb4_hungarian_ci;
 
 USE parkolokezelo;
 
@@ -47,6 +47,7 @@ CREATE TABLE `esemeny` (
 --
 
 CREATE TABLE `jarmu` (
+  `id` int(11) NOT NULL,
   `rendszam` varchar(16) NOT NULL,
   `tipus` varchar(20) NOT NULL,
   `mozgaskorlatozott` bit(1) NOT NULL,
@@ -60,6 +61,7 @@ CREATE TABLE `jarmu` (
 --
 
 CREATE TABLE `parkolo` (
+  `id` int(11) NOT NULL,
   `sor` int(11) NOT NULL,
   `oszlop` int(11) NOT NULL,
   `tipus` varchar(50) NOT NULL DEFAULT 'normal',
@@ -70,39 +72,39 @@ CREATE TABLE `parkolo` (
 -- A tábla adatainak kiíratása `parkolo`
 --
 
-INSERT INTO `parkolo` (`sor`, `oszlop`, `tipus`, `jarmu_rendszam`) VALUES
-(0, 0, 'elektromos', NULL),
-(0, 1, 'elektromos', NULL),
-(0, 2, 'normal', NULL),
-(0, 3, 'normal', NULL),
-(0, 4, 'normal', NULL),
-(0, 5, 'normal', NULL),
-(0, 6, 'normal', NULL),
-(0, 7, 'normal', NULL),
-(1, 0, 'elektromos', NULL),
-(1, 1, 'elektromos', NULL),
-(1, 2, 'normal', NULL),
-(1, 3, 'normal', NULL),
-(1, 4, 'normal', NULL),
-(1, 5, 'normal', NULL),
-(1, 6, 'normal', NULL),
-(1, 7, 'normal', NULL),
-(2, 0, 'normal', NULL),
-(2, 1, 'normal', NULL),
-(2, 2, 'normal', NULL),
-(2, 3, 'normal', NULL),
-(2, 4, 'normal', NULL),
-(2, 5, 'normal', NULL),
-(2, 6, 'mozgasserult', NULL),
-(2, 7, 'mozgasserult', NULL),
-(3, 0, 'normal', NULL),
-(3, 1, 'normal', NULL),
-(3, 2, 'normal', NULL),
-(3, 3, 'normal', NULL),
-(3, 4, 'normal', NULL),
-(3, 5, 'normal', NULL),
-(3, 6, 'mozgasserult', NULL),
-(3, 7, 'mozgasserult', NULL);
+INSERT INTO `parkolo` (`id`, `sor`, `oszlop`, `tipus`, `jarmu_rendszam`) VALUES
+(1, 0, 0, 'elektromos', NULL),
+(2, 0, 1, 'elektromos', NULL),
+(3, 0, 2, 'normal', NULL),
+(4, 0, 3, 'normal', NULL),
+(5, 0, 4, 'normal', NULL),
+(6, 0, 5, 'normal', NULL),
+(7, 0, 6, 'normal', NULL),
+(8, 0, 7, 'normal', NULL),
+(9, 1, 0, 'elektromos', NULL),
+(10, 1, 1, 'elektromos', NULL),
+(11, 1, 2, 'normal', NULL),
+(12, 1, 3, 'normal', NULL),
+(13, 1, 4, 'normal', NULL),
+(14, 1, 5, 'normal', NULL),
+(15, 1, 6, 'normal', NULL),
+(16, 1, 7, 'normal', NULL),
+(17, 2, 0, 'normal', NULL),
+(18, 2, 1, 'normal', NULL),
+(19, 2, 2, 'normal', NULL),
+(20, 2, 3, 'normal', NULL),
+(21, 2, 4, 'normal', NULL),
+(22, 2, 5, 'normal', NULL),
+(23, 2, 6, 'mozgasserult', NULL),
+(24, 2, 7, 'mozgasserult', NULL),
+(25, 3, 0, 'normal', NULL),
+(26, 3, 1, 'normal', NULL),
+(27, 3, 2, 'normal', NULL),
+(28, 3, 3, 'normal', NULL),
+(29, 3, 4, 'normal', NULL),
+(30, 3, 5, 'normal', NULL),
+(31, 3, 6, 'mozgasserult', NULL),
+(32, 3, 7, 'mozgasserult', NULL);
 
 -- --------------------------------------------------------
 
@@ -134,13 +136,14 @@ ALTER TABLE `esemeny`
 -- A tábla indexei `jarmu`
 --
 ALTER TABLE `jarmu`
-  ADD PRIMARY KEY (`rendszam`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `idx_rendszam_unique` (`rendszam`);
 
 --
 -- A tábla indexei `parkolo`
 --
 ALTER TABLE `parkolo`
-  ADD PRIMARY KEY (`sor`,`oszlop`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `fk_parkolok_jarmu_rendszam` (`jarmu_rendszam`);
 
 --
@@ -160,6 +163,18 @@ ALTER TABLE `tranzakcio`
 --
 ALTER TABLE `esemeny`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `jarmu`
+--
+ALTER TABLE `jarmu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `parkolo`
+--
+ALTER TABLE `parkolo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT a táblához `tranzakcio`

@@ -9,13 +9,20 @@ namespace Parkoló.Models
 {
     public class Jarmu
     {
+        public int Id { get; set; }
         public string Rendszam { get; set; }
         public string Tipus { get; set; }
         public bool Mozgaskorlatozott { get; set; }
         public bool Elektromos { get; set; }
 
+        public Jarmu()
+        {
+
+        }
+
         public Jarmu(MySqlDataReader dataReader) 
         {
+            Id = dataReader.GetInt32("Id");
             Rendszam = dataReader["rendszam"].ToString();
             Tipus = dataReader["tipus"].ToString();
             Mozgaskorlatozott = Convert.ToBoolean(dataReader["mozgaskorlatozott"]);
@@ -24,10 +31,14 @@ namespace Parkoló.Models
 
         public override bool Equals(object? obj)
         {
-            var temp = obj as Jarmu;
-            if (obj == null)
+            if (obj is not Jarmu temp)
                 return false;
-            return Rendszam == temp.Rendszam && Tipus == temp.Tipus && Mozgaskorlatozott == temp.Mozgaskorlatozott && Elektromos == temp.Elektromos;
+
+            return Id == temp.Id
+                   && Rendszam == temp.Rendszam
+                   && Tipus == temp.Tipus
+                   && Mozgaskorlatozott == temp.Mozgaskorlatozott
+                   && Elektromos == temp.Elektromos;
         }
     }
 }

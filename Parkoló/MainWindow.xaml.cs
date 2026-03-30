@@ -25,11 +25,11 @@ namespace Parkoló
             ctx = new ParkoloKezeloContext();
             TesztEszkozok tesztEszkozok = new TesztEszkozok();
             tesztEszkozok.Show();
-            GenerateParkolo();
+            //GenerateParkolo();
 
         }
 
-        public void GenerateParkolo()
+       /* public void GenerateParkolo()
         {
             Viewbox viewbox = new Viewbox();
             viewbox.Margin = new Thickness(30);
@@ -62,10 +62,12 @@ namespace Parkoló
             viewbox.Child = border;
             Grid.SetColumn(viewbox, 1);
             mainGrid.Children.Add(viewbox);
-        }
+        }*/
 
         private void Jarmuvek_Click(object sender, RoutedEventArgs e)
         {
+            jarmu ablak = new jarmu();
+            ablak.Show();
 
         }
 

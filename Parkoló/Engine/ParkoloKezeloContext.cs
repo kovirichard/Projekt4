@@ -109,7 +109,7 @@ namespace Parkoló.Engine
             return tabla;
         }
 
-        private void ExecuteNonQuery(string sql)
+        public void ExecuteNonQuery(string sql)
         {
             try
             {

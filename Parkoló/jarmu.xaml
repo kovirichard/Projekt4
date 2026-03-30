@@ -1,0 +1,46 @@
+﻿<Window x:Class="Parkoló.jarmu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Járművek" Height="550" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Rendszám:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="tbRendszam" Width="100" Margin="5"/>
+
+            <TextBlock Text="Típus:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="tbTipus" Width="100" Margin="5"/>
+
+            <CheckBox x:Name="cbMozgaskorlatozott" Content="Mozgáskorlátozott" Margin="10,0"/>
+            <CheckBox x:Name="cbElektromos" Content="Elektromos" Margin="10,0"/>
+
+            <Button Content="Hozzáadás" Width="100" Margin="10,0" Click="Hozzaadas_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Módosítás" Width="120" Margin="5" Click="Modositas_Click"/>
+            <Button Content="Törlés" Width="120" Margin="5" Click="Torles_Click"/>
+        </StackPanel>
+
+        <ListView x:Name="lvJarmuvek" Grid.Row="2" Margin="5" SelectionMode="Single" SelectionChanged="lvJarmuvek_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Rendszám" DisplayMemberBinding="{Binding Rendszam}" Width="120"/>
+                    <GridViewColumn Header="Típus" DisplayMemberBinding="{Binding Tipus}" Width="120"/>
+                    <GridViewColumn Header="Mozgáskorlátozott" DisplayMemberBinding="{Binding Mozgaskorlatozott}" Width="150"/>
+                    <GridViewColumn Header="Elektromos" DisplayMemberBinding="{Binding Elektromos}" Width="120"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+        <TextBlock x:Name="txtStatus" Grid.Row="3" Margin="5" FontStyle="Italic" Foreground="DarkGreen"/>
+    </Grid>
+</Window>
