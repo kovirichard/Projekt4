@@ -18,10 +18,11 @@ namespace Parkoló
     /// </summary>
     public partial class MainWindow : Window
     {
-        ParkoloKezeloContext parkoloKezeloContext = new ParkoloKezeloContext();
+        ParkoloKezeloContext ctx { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            ctx = new ParkoloKezeloContext();
             TesztEszkozok tesztEszkozok = new TesztEszkozok();
             tesztEszkozok.Show();
             GenerateParkolo();
@@ -31,6 +32,7 @@ namespace Parkoló
         public void GenerateParkolo()
         {
             Viewbox viewbox = new Viewbox();
+            viewbox.Margin = new Thickness(30);
             Border border = new Border
             {
                 BorderBrush = Brushes.SlateGray,
@@ -38,25 +40,24 @@ namespace Parkoló
             };
             Grid grid = new Grid();
 
-            for (int i = 0; i <= parkoloKezeloContext.Parkolok.Max(x => x.Sor); i++)
+            for (int i = 0; i <= ctx.Parkolok.Max(x => x.Sor)+1; i++)
             {
-                for (int j = 0; j <= parkoloKezeloContext.Parkolok.Max(x => x.Oszlop); j++)
-                {
-                    var parkolo = parkoloKezeloContext.Parkolok.FirstOrDefault(x => x.Sor == i && x.Oszlop == j);
-                    if (parkolo != null)
-                    {
-                        Rectangle rectangle = new Rectangle
-                        {
-                            Fill = parkolo.Jarmu_rendszam == "" ? Brushes.Red : Brushes.Green,
-                            Stroke = Brushes.Black,
-                            StrokeThickness = 1,
-                            Width = 50,
-                            Height = 50
-                        };
-                        grid.Children.Add(rectangle);
-                    }
-                }
+                var sor = new RowDefinition();
+                sor.Height = new GridLength(50);
+                grid.RowDefinitions.Add(sor);
             }
+            for (int j = 0; j <= ctx.Parkolok.Max(x => x.Oszlop)+1; j++)
+            {
+                var oszlop = new ColumnDefinition();
+                oszlop.Width = new GridLength(50);
+                grid.ColumnDefinitions.Add(oszlop);
+            }
+
+            foreach (var hely in ctx.Parkolok)
+            {
+                
+            }
+
             border.Child = grid;
             viewbox.Child = border;
             Grid.SetColumn(viewbox, 1);

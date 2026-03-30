@@ -12,7 +12,7 @@ namespace Parkoló.Models
         public string Rendszam { get; set; }
         public string Tipus { get; set; }
         public bool Mozgaskorlatozott { get; set; }
-        public  bool Elektromos { get; set; }
+        public bool Elektromos { get; set; }
 
         public Jarmu(MySqlDataReader dataReader) 
         {

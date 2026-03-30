@@ -27,13 +27,29 @@ namespace Parkoló.Engine
         public ParkoloKezeloContext()
         {
             _server = "localhost";
-            _port = 3300;
+            _port = 3306;
             _database = "parkolokezelo";
             _username = "root";
             _password = "";
 
-            var sikeres = false;
+            Connection = new MySqlConnection($"server={_server};port={_port};database={_database};user={_username};password={_password}");
+            try
+            {
+                Connection.Open();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Nem sikerült csatlakozni az adatbázishoz. Kérem ellenőrizze a beállításokat.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.Application.Current.Shutdown();
+            }
+            finally
+            {
+                Connection.Close();
+            }
 
+            /*
+            var sikeres = false;
+            
             do
             {
                 try
@@ -59,6 +75,7 @@ namespace Parkoló.Engine
                 MessageBox.Show("Nem sikerült csatlakozni az adatbázishoz. Kérem ellenőrizze a beállításokat.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 System.Windows.Application.Current.Shutdown();
             }
+            */
 
             Parkolok = Read<Parkolo>(dataReader => new Parkolo(dataReader));
             Jarmuvek = Read<Jarmu>(dataReader => new Jarmu(dataReader));
