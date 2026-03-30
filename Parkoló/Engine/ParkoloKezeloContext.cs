@@ -52,7 +52,7 @@ namespace Parkoló.Engine
 
             if (sikeres)
             {
-                Connection.Close();
+                Connection?.Close();
             }
             else
             {
