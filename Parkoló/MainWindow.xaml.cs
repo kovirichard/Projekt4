@@ -102,7 +102,8 @@ namespace Parkoló
 
         private void Jarmuvek_Click(object sender, RoutedEventArgs e)
         {
-
+            Jarmuvek jarmuvekAblak = new Jarmuvek();
+            jarmuvekAblak.ShowDialog();
         }
 
         private void Parkolok_Click(object sender, RoutedEventArgs e)
